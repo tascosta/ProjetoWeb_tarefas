@@ -3,7 +3,7 @@ module.exports = function () {
   this.getTarefas = async function(app, req, res) {
 
     let db = app.config.dbConnection();
-    let tarefaModel = app.models.tarefaModel;
+    let tarefaDAO = app.models.tarefaDAO;
 
     let tarefasBacklog = [];
     let tarefasEmAndamento = [];
@@ -11,9 +11,9 @@ module.exports = function () {
     let erro = null;
 
     try{
-      tarefasBacklog = await tarefaModel.getTarefasBacklog(1, db);
-      tarefasEmAndamento = await tarefaModel.getTarefasEmAndamento(1, db);
-      tarefasConcluidas = await tarefaModel.getTarefasConcluidas(1, db);
+      tarefasBacklog = await tarefaDAO.getTarefasBacklog(1, db);
+      tarefasEmAndamento = await tarefaDAO.getTarefasEmAndamento(1, db);
+      tarefasConcluidas = await tarefaDAO.getTarefasConcluidas(1, db);
     }
     catch (err) {
       console.log(err);
@@ -39,12 +39,12 @@ module.exports = function () {
   this.deletarTarefa = async function(app, req, res) {
 
     const db = app.config.dbConnection();
-    let tarefaModel = app.models.tarefaModel;
+    let tarefaDAO = app.models.tarefaDAO;
     let idTarefa = req.query.id;
 
     try{
       if(idTarefa)
-        await tarefaModel.deleteTarefa(idTarefa, db);
+        await tarefaDAO.deleteTarefa(idTarefa, db);
     }
     catch (err) {
       console.log(err);
@@ -61,16 +61,16 @@ module.exports = function () {
 
   this.criarTarefa = async function(app, req, res) {
     const db = app.config.dbConnection();
-    let tarefaModel = app.models.tarefaModel;
+    let tarefaDAO = app.models.tarefaDAO;
 
     try {
       let tarefa = req.body;
       tarefa.id_usuario = 1;
 
       if(tarefa.id)
-        await tarefaModel.atualizarTarefa(tarefa, db);
+        await tarefaDAO.atualizarTarefa(tarefa, db);
       else
-        await tarefaModel.inserirTarefa(tarefa, db);
+        await tarefaDAO.inserirTarefa(tarefa, db);
     }
     catch (err) {
       console.log(err);
@@ -87,13 +87,13 @@ module.exports = function () {
 
   this.atualizarProgressoTarefa = async function(app, req, res) {
     const db = app.config.dbConnection();
-    let tarefaModel = app.models.tarefaModel;
+    let tarefaDAO = app.models.tarefaDAO;
 
     let tarefa = req.body;
 
     try {
-      await tarefaModel.atualizarProgressoTarefa(tarefa, db);
-      tarefa = await tarefaModel.getTarefa(tarefa.id, db);
+      await tarefaDAO.atualizarProgressoTarefa(tarefa, db);
+      tarefa = await tarefaDAO.getTarefa(tarefa.id, db);
 
       if(tarefa.progresso == 100) {
         let emailDestino = process.env.EMAIL_NOTIFICACAO;

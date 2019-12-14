@@ -8,7 +8,7 @@ let connMysql = function () {
     let settings;
     
     if(!clearDbUrl) {
-        //Rodando local
+        
         settings = {};
         settings.host = process.env.HOST;
         settings.user = process.env.USER;
@@ -16,7 +16,7 @@ let connMysql = function () {
         settings.database = process.env.DATABASE;
     }
     else { 
-        //Rodando no Heroku com ClearDB
+        
         settings = clearDbUrl;
     }
     

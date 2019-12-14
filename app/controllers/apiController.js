@@ -2,9 +2,9 @@ module.exports = function() {
 
   let getUsuario = async function(app, email) {
     let db = app.config.dbConnection();
-    let usuarioModel = app.models.usuarioModel;
+    let usuarioDAO = app.models.usuarioDAO;
 
-    let usuario = await usuarioModel.getByEmail(email, db);
+    let usuario = await usuarioDAO.getByEmail(email, db);
     
     try {
       await db.close();
@@ -16,9 +16,9 @@ module.exports = function() {
 
   let getTarefa = async function(app, id) {
     let db = app.config.dbConnection();
-    let tarefaModel = app.models.tarefaModel;
+    let tarefaDAO = app.models.tarefaDAO;
 
-    let tarefa = await tarefaModel.getTarefa(id, db);
+    let tarefa = await tarefaDAO.getTarefa(id, db);
     
     try {
       await db.close();
@@ -135,7 +135,7 @@ module.exports = function() {
   
   this.criaTarefa = async function(app, req, res) {
     let db = app.config.dbConnection();
-    let tarefaModel = app.models.tarefaModel;
+    let tarefaDAO = app.models.tarefaDAO;
     let tarefaDto = req.body;
 
     if(req.usuario) {
@@ -147,8 +147,8 @@ module.exports = function() {
           progresso: 0
         }
 
-        let row = await tarefaModel.inserirTarefa(tarefa, db);
-        tarefa = await tarefaModel.getTarefa(row.insertId, db);
+        let row = await tarefaDAO.inserirTarefa(tarefa, db);
+        tarefa = await tarefaDAO.getTarefa(row.insertId, db);
         res.status(200);
         res.send(tarefa);
       }
@@ -169,7 +169,7 @@ module.exports = function() {
 
   this.atualizaTarefa = async function(app, req, res) {
     let db = app.config.dbConnection();
-    let tarefaModel = app.models.tarefaModel;
+    let tarefaDAO = app.models.tarefaDAO;
     let api = app.models.api;
     let tarefaDto = req.body;
 
@@ -183,7 +183,7 @@ module.exports = function() {
         }
 
         await api.atualizarTarefa(tarefa, db);
-        tarefa = await tarefaModel.getTarefa(tarefa.id, db);
+        tarefa = await tarefaDAO.getTarefa(tarefa.id, db);
         res.status(200);
         res.send(tarefa);
       }
@@ -204,11 +204,11 @@ module.exports = function() {
 
   this.deleteTarefa = async function(app, req, res) {
     let db = app.config.dbConnection();
-    let tarefaModel = app.models.tarefaModel;
+    let tarefaDAO = app.models.tarefaDAO;
 
     if(req.tarefa) {
       try {
-        await tarefaModel.deleteTarefa(req.tarefa.id, db);
+        await tarefaDAO.deleteTarefa(req.tarefa.id, db);
         res.status(200);
         res.send();
       }
