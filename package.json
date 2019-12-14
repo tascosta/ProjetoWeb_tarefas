@@ -1,0 +1,28 @@
+{
+  "name": "projetofinalnodejs",
+  "version": "1.0.0",
+  "description": "Projeto final DSW - Quadro de Tarefas",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "Talita Costa & Isabelle Faria",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "consign": "^0.1.6",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.0.1",
+    "express": "^4.16.4",
+    "express-device": "^0.4.2",
+    "express-validator": "^6.3.0",
+    "mysql": "^2.17.1",
+    "nodemailer": "^6.4.2",
+    "react": "^16.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.17",
+    "nodemon": "1.18.10"
+  }
+}

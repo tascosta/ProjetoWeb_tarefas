@@ -1,0 +1,227 @@
+:root {
+  --color-yellow: #FFC614;
+  --color-white: #FFFFFF;
+  --color-black: #202C3C;
+  --color-gray: #e1e1e1;
+  --color-gray-dark: #808080;
+  --color-shadow: rgba(0, 0, 0, .2);
+}
+
+html, body {
+  position: relative;
+  display: block;
+  width: 100vw;
+  height: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.container-fluid {
+  position: relative;
+  display: block;
+  height: 100%;
+  background-color: var(--color-yellow);
+}
+
+header h1 {
+  text-align: center;
+  height: 10rem;
+  line-height: 10rem;
+  margin: 0;
+}
+
+.tasks-content {
+  position: relative;
+  height: calc(100% - 10rem);
+}
+.tasks-content .tasks-container-wrapper {
+  position: relative;
+  padding: 0px 15px;
+  height: 100%;
+  max-height: 100%;
+  display: block;
+}
+.tasks-content .tasks-container-wrapper:first-child .tasks-container {
+  padding-bottom: 50px;
+}
+.tasks-content .tasks-container-wrapper .tasks-container {
+  position: relative;
+  display: block;
+  height: 100%;
+  background-color: var(--color-white);
+  padding: 15px 10px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  padding-bottom: 0px;
+}
+.tasks-content .tasks-container-wrapper .tasks-container h2 {
+  text-align: center;
+  font-size: 1rem;
+}
+.tasks-content .tasks-container-wrapper .tasks-container .task-list-footer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 0px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+}
+.tasks-content .tasks-container-wrapper .tasks-container .form-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  background-color: var(--color-white);
+  opacity: 0;
+  left: 0;
+  right: 0;
+  top: 100%;
+  transition: .4s;
+  z-index: 0;
+  padding: 15px 20px;
+}
+.tasks-content .tasks-container-wrapper .tasks-container .form-container--open {
+  top: 0;
+  opacity: 1;
+  z-index: 10;
+}
+.tasks-content .tasks-container-wrapper .tasks-container .form-container form label {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+}
+.tasks-content .tasks-container-wrapper .tasks-container .form-container form #tarefa-descricao {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.task-list-container {
+  height: calc(100% - 30px);
+  overflow-y: auto;
+}
+.task-list-container .task-list {
+  position: relative;
+  display: block;
+  padding: 0px 5px;
+}
+.task-list-container .task-list .task {
+  position: relative;
+  list-style: none;
+  background: var(--color-yellow);
+  color: var(--color-black);
+  padding: 8px 15px 15px 15px;
+  border-radius: 6px;
+  border-bottom: 2px solid var(--color-gray);
+  margin: 15px 0px;
+}
+.task-list-container .task-list .task .task-anchor {
+  position: absolute;
+  top: -50px;
+}
+.task-list-container .task-list .task .task-title {
+  font-weight: bold;
+  margin: 0;
+}
+.task-list-container .task-list .task .task-date {
+  font-size: .7rem;
+  margin: 0;
+}
+.task-list-container .task-list .task .task-progress-label {
+  margin-bottom: 8px;
+}
+.task-list-container .task-list .task .task-progress, .task-list-container .task-list .task .rangeslider {
+  height: 10px;
+  background-color: var(--color-black);
+  border-radius: 3px;
+}
+.task-list-container .task-list .task .task-progress .rangeslider__fill, .task-list-container .task-list .task .rangeslider .rangeslider__fill {
+  background-color: var(--color-white);
+  box-shadow: none;
+  border-radius: 3px;
+}
+.task-list-container .task-list .task .task-progress .rangeslider__handle, .task-list-container .task-list .task .rangeslider .rangeslider__handle {
+  border-radius: 5px;
+  height: 20px;
+  width: 40px;
+  line-height: 20px;
+  background: var(--color-white);
+  color: var(--color-black);
+  box-shadow: none;
+  border: none;
+  text-align: center;
+  top: -5px;
+  font-size: .7rem;
+  font-weight: bold;
+}
+.task-list-container .task-list .task .task-progress .rangeslider__handle:after, .task-list-container .task-list .task .rangeslider .rangeslider__handle:after {
+  background: 0;
+}
+.task-list-container .task-list .task .task-actions {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+}
+.task-list-container .task-list .task .task-actions .button {
+  width: 24px;
+  height: 24px;
+  display: block;
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 0;
+}
+.task-list-container .task-list .task .task-actions .button .material-icons {
+  pointer-events: none;
+}
+
+.button {
+  background-color: var(--color-white);
+  color: var(--color-yellow);
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 5px 10px;
+  box-shadow: 0px 1px 10px 1px var(--color-shadow);
+  border: none;
+  font-size: .8rem;
+  cursor: pointer;
+  transition: .2s;
+}
+.button:hover {
+  background-color: var(--color-gray);
+  color: var(--color-yellow);
+}
+
+input[type='text'] {
+  background-color: var(--color-white);
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: .8rem;
+  box-shadow: 0px 1px 10px 1px var(--color-shadow);
+  border: none;
+}
+
+@media (max-width: 768px) {
+  html, body {
+    overflow: auto;
+  }
+
+  .container-fluid {
+    min-height: 100%;
+    height: auto;
+  }
+
+  .tasks-content .tasks-container-wrapper {
+    height: 90vh;
+    padding-bottom: 20px;
+  }
+  .tasks-content .tasks-container-wrapper .tasks-container {
+    border-radius: 15px;
+    padding-bottom: 15px;
+  }
+}
+  

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <title>Tarefas</title>
+</head>
+
+<body>
+  <div class="task-list-footer">
+    <label>Criar Nova Tarefa </label>
+  </div>
+  <div class="form-container" id="form">
+    <form name="tarefa-form" method="POST" action="tarefas/">
+      <label for="tarefa-descricao">Descrição da tarefa</label>
+      <input id="tarefa-id" type="hidden" name="id" />
+      <input id="tarefa-descricao" type="text" maxlength="100" name="descricao" placeholder="Entre com a tarefa"
+        required="required" />
+      <input class="btn btn-info" type="submit" value="Enviar" />
+      <input class="btn btn-info" id="btn-cancelar" type="button" value="Cancelar" />
+    </form>
+  </div>
+  <div class="container-fluid">
+    <header>
+      <h1>Tarefas</h1>
+    </header>
+    <div id="sortableKanbanBoards" class="row">
+
+      <div class="panel panel-primary kanban-col">
+        <div class="panel-heading">
+          BACKLOG
+          <i class="fa fa-2x fa-plus-circle pull-right"></i>
+        </div>
+        <div class="panel-body">
+          <div id="TODO" class="kanban-centered">
+
+            <article class="kanban-entry grab" id="item1" draggable="true">
+              <div class="kanban-entry-inner">
+                <div class="kanban-label">
+                  <ul class="kanban-list">
+                    <% for(let tarefa of tarefas.backlog) { %>
+                    <li class="kanban">
+                      <a class="kanban-anchor" name="<%= tarefa.id %>"></a>
+                      <p class="kanban-title"><%= tarefa.descricao %></p>
+                      <p class="kanban-date"><%= tarefa.created_at %></p>
+                      <p class="kanban-progress-label">Progresso da tarefa:</p>
+                      <form name="progresso-form-<%= tarefa.id %>" method="POST" action="tarefas/progresso">
+                        <input type="hidden" name="id" value="<%= tarefa.id %>" />
+                        <input class="kanban-progress" type="range" min="0" max="100" value="<%= tarefa.progresso %>"
+                          name="progresso" onchange="document.forms['progresso-form-<%= tarefa.id %>'].submit()" />
+                      </form>
+                      <div class="kanban-actions">
+                        <a class="button" href="/tarefas/delete?id=<%= tarefa.id %>"><i
+                            class="material-icons">delete</i></a>
+                        <button class="button btn-editar-tarefa" data-tarefa-id="<%= tarefa.id %>"
+                          data-tarefa-descricao="<%= tarefa.descricao %>" onclick="editarTarefa(event)"><i
+                            class="material-icons">edit</i></button>
+                      </div>
+                    </li>
+                    <% } %>
+                  </ul>
+                </div>
+              </div>
+            </article>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="panel panel-primary kanban-col">
+        <div class="panel-heading">
+          TAREFAS EM ANDAMENTO
+          <i class="fa fa-2x fa-plus-circle pull-right"></i>
+        </div>
+        <div class="panel-body">
+          <div id="TODO" class="kanban-centered">
+
+            <article class="kanban-entry grab" id="item1" draggable="true">
+              <div class="kanban-entry-inner">
+                <div class="kanban-label">
+                  <ul class="kanban-list">
+                    <% for(let tarefa of tarefas.emAndamento) { %>
+                    <li class="kanban">
+                      <a class="kanban-anchor" name="<%= tarefa.id %>"></a>
+                      <p class="kanban-title"><%= tarefa.descricao %></p>
+                      <p class="kanban-date"><%= tarefa.created_at %></p>
+                      <p class="kanban-progress-label">Progresso da tarefa:</p>
+                      <form name="progresso-form-<%= tarefa.id %>" method="POST" action="tarefas/progresso">
+                        <input type="hidden" name="id" value="<%= tarefa.id %>" />
+                        <input class="kanban-progress" type="range" min="0" max="100" value="<%= tarefa.progresso %>"
+                          name="progresso" onchange="document.forms['progresso-form-<%= tarefa.id %>'].submit()" />
+                      </form>
+                      <div class="kanban-actions">
+                        <a class="button" href="/tarefas/delete?id=<%= tarefa.id %>"><i
+                            class="material-icons">delete</i></a>
+                      </div>
+                    </li>
+                    <% } %>
+                  </ul>
+                </div>
+              </div>
+            </article>
+          </div>
+
+        </div>
+      </div>
+      <div class="panel panel-primary kanban-col">
+        <div class="panel-heading">
+          TAREFAS FINALIZADAS
+          <i class="fa fa-2x fa-plus-circle pull-right"></i>
+        </div>
+        <div class="panel-body">
+          <div id="DONE" class="kanban-centered">
+
+            <article class="kanban-entry grab" id="item1" draggable="true">
+              <div class="kanban-entry-inner">
+                <div class="kanban-label">
+                  <ul class="kanban-list">
+                    <% for(let tarefa of tarefas.emAndamento) { %>
+                    <li class="kanban">
+                      <a class="kanban-anchor" name="<%= tarefa.id %>"></a>
+                      <p class="kanban-title"><%= tarefa.descricao %></p>
+                      <p class="kanban-date"><%= tarefa.created_at %></p>
+                      <p class="kanban-progress-label">Progresso da tarefa:</p>
+                      <form name="progresso-form-<%= tarefa.id %>" method="POST" action="tarefas/progresso">
+                        <input type="hidden" name="id" value="<%= tarefa.id %>" />
+                        <input class="kanban-progress" type="range" min="0" max="100" value="<%= tarefa.progresso %>"
+                          name="progresso" onchange="document.forms['progresso-form-<%= tarefa.id %>'].submit()" />
+                      </form>
+                      <div class="kanban-actions">
+                        <a class="button" href="/tarefas/delete?id=<%= tarefa.id %>"><i
+                            class="material-icons">delete</i></a>
+                      </div>
+                    </li>
+                    <% } %>
+                  </ul>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+</body>
+
+</html>
